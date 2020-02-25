@@ -40,6 +40,7 @@
 <style lang="scss" scoped>
 #app-container{
   padding-top: 40px;
+  padding-bottom: 50px;
   overflow-x: hidden;//解决了底部按钮滚动条问题
 }
 

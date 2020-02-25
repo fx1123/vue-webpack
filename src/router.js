@@ -4,6 +4,8 @@ import home from './components/tabber/HomeContainer.vue'
 import member from './components/tabber/MemberContainer.vue'
 import shopcar from './components/tabber/ShopcarContainer.vue'
 import search from './components/tabber/SearchContainer.vue'
+import newlist from './components/news/NewList.vue'
+import newsinfo from './components/news/NewsInfo.vue'
 
 
 // 3. 创建路由对象
@@ -14,7 +16,10 @@ var router = new VueRouter({
         { path: "/home", component: home },
         { path: "/member", component: member },
         { path: "/shopcar", component: shopcar },
-        { path: "/search", component: search }
+        { path: "/search", component: search },
+        { path: "/home/newlist", component: newlist },
+        { path: "/home/newsinfo/:id", component: newsinfo }
+
 
     ],
     linkActiveClass: 'mui-active'
