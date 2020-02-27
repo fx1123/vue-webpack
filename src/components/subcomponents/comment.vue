@@ -2,9 +2,9 @@
   <div class="cmt-container">
     <h3>发表评论</h3>
     <hr>
-    <textarea placeholder="请输入要BB的内容（做多吐槽120字）" maxlength="120"></textarea>
+    <textarea placeholder="请输入要BB的内容（做多吐槽120字）" maxlength="120" v-model="msg"></textarea>
 
-    <mt-button type="primary" size="large">发表评论</mt-button>
+    <mt-button type="primary" size="large" @click="postcomment">发表评论</mt-button>
 
     <div class="cmt-list">
       <div class="cmt-item" v-for="(item, i) in comments" :key="item.add_time">
@@ -53,9 +53,38 @@ export default {
       // 加载更多
       this.pageIndex++;
       this.getComments();
+    },
+    postcomment(){
+      //判断是否为空
+      if(this.msg.trim().length===0){
+        return Toast("评论数据不能为空")
+      }
+      // 发表评论
+      // 参数1： 请求的URL地址
+      // 参数2： 提交给服务器的数据对象 { content: this.msg }
+      // 参数3： 定义提交时候，表单中数据的格式  { emulateJSON:true },已在全局配置
+      this.$http.post("api/postcomment/" +this.id,{comment:this.msg}).then(result =>{
+        if(result.body.status===0){
+          //拼接一个评论对象
+          let cat = {
+            user_name:"匿名",
+            add_time:Date.now(),
+            content:this.msg
+          };
+          //放到评论数组的开头
+          this.comments.unshift(cat);
+          this.msg="";
+
+          
+        }else{
+          Toast("数据提交失败")
+        }
+      })
+
     }
+
   },
-  props: ["id"]
+  props: ["id"]//comment是NewsInfo的子组件，父组件向子组件传值需在次数组中定义一下
 };
 </script>
 
